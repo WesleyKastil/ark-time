@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ark Time - Consultoria Musical</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+:root{
+  --gold:#B8963E; --gold-light:#D4AF6A; --dark:#0F0F0F; --dark-2:#1A1A1A;
+  --dark-3:#242424; --muted:#888; --light:#F8F5F0; --white:#fff;
+  --border:rgba(184,150,62,.25); --border-light:rgba(184,150,62,.12);
+  --radius:10px; --radius-sm:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',Georgia,sans-serif;background:var(--dark);color:var(--light);min-height:100vh;line-height:1.6;}
+.wrapper{max-width:820px;margin:0 auto;padding:40px 24px 80px;}
+header{text-align:center;padding:60px 24px 50px;background:linear-gradient(160deg,var(--dark-2) 0%,var(--dark-3) 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% -10%,rgba(184,150,62,.12) 0%,transparent 70%);pointer-events:none;}
+.header-ornament{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:20px;}
+.ornament-line{flex:1;max-width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-light));}
+.ornament-line.right{background:linear-gradient(90deg,var(--gold-light),transparent);}
+.ornament-diamond{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);box-shadow:0 0 12px rgba(184,150,62,.5);}
+header h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.8rem,7vw,4.2rem);font-weight:600;letter-spacing:.12em;color:var(--white);text-transform:uppercase;line-height:1.1;margin-bottom:6px;}
+header h1 span{color:var(--gold-light);}
+.header-subtitle{font-family:'Cormorant Garamond',serif;font-size:1rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:28px;}
+.header-desc{font-size:.92rem;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.75;}
+.form-section{background:var(--dark-2);border:1px solid var(--border-light);border-radius:var(--radius);padding:36px;margin-bottom:28px;}
+.section-title{display:flex;align-items:center;gap:14px;margin-bottom:28px;}
+.section-number{width:32px;height:32px;flex-shrink:0;border:1px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--gold);}
+.section-title h2{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:500;color:var(--white);letter-spacing:.04em;}
+.section-title h2 span{color:var(--gold-light);}
+.section-line{flex:1;height:1px;background:var(--border-light);}
+.field-grid{display:grid;gap:20px;}
+.cols-2{grid-template-columns:1fr 1fr;}
+.field-wrap{display:flex;flex-direction:column;gap:7px;}
+label{font-size:.78rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+label .req{color:var(--gold);margin-left:3px;}
+label .opt{font-size:.68rem;color:rgba(136,136,136,.6);text-transform:none;font-weight:300;margin-left:4px;}
+input[type=text],input[type=email],input[type=url],textarea{width:100%;background:var(--dark-3);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-sm);color:var(--light);font-family:'DM Sans',sans-serif;font-size:.93rem;padding:13px 16px;outline:none;transition:border-color .2s,box-shadow .2s;}
+input:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,150,62,.12);}
+input.error,textarea.error{border-color:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.12);}
+.field-error{font-size:.75rem;color:#e74c3c;margin-top:4px;display:none;}
+input::placeholder,textarea::placeholder{color:rgba(136,136,136,.45);}
+textarea{resize:vertical;min-height:80px;}
+.obra-block{background:var(--dark-3);border:1px solid rgba(184,150,62,.1);border-radius:var(--radius-sm);padding:24px;margin-bottom:16px;}
+.obra-block:hover{border-color:rgba(184,150,62,.22);}
+.obra-block-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.obra-block-title{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--gold);font-weight:500;letter-spacing:.06em;}
+.btn-remove{background:none;border:1px solid rgba(192,57,43,.35);border-radius:4px;color:rgba(192,57,43,.7);font-size:.72rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;padding:4px 10px;transition:all .2s;}
+.btn-remove:hover{background:rgba(192,57,43,.12);border-color:#c0392b;color:#e74c3c;}
+.btn-add-obra{width:100%;padding:14px;background:transparent;border:1px dashed rgba(184,150,62,.3);border-radius:var(--radius-sm);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;}
+.btn-add-obra:hover{background:rgba(184,150,62,.06);border-color:var(--gold);}
+.form-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;}
+.btn{flex:1;min-width:140px;padding:15px 28px;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:.85rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;border:none;transition:all .22s;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-primary{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);color:var(--dark);box-shadow:0 4px 20px rgba(184,150,62,.3);}
+.btn-primary:hover{box-shadow:0 6px 28px rgba(184,150,62,.45);transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.1);}
+.btn-secondary:hover{border-color:var(--muted);color:var(--light);}
+.btn-pdf{background:transparent;color:var(--gold);border:1px solid var(--border);}
+.btn-pdf:hover{background:rgba(184,150,62,.08);border-color:var(--gold-light);}
+.toast{position:fixed;bottom:32px;right:32px;z-index:999;background:var(--dark-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 22px;font-size:.87rem;color:var(--light);box-shadow:0 4px 32px rgba(0,0,0,.18);transform:translateY(20px);opacity:0;transition:all .3s;max-width:320px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.success{border-color:rgba(46,204,113,.35);}
+.toast.error-toast{border-color:rgba(192,57,43,.35);}
+footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border-light);background:var(--dark-2);}
+footer p{font-size:.74rem;color:rgba(136,136,136,.45);letter-spacing:.06em;}
+@media(max-width:680px){.cols-2{grid-template-columns:1fr;}.form-section{padding:24px 18px;}.form-actions{flex-direction:column;}.btn{min-width:100%;}}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  body{background:#fff!important;color:#111!important;}
+  header{background:#111!important;border-bottom:2px solid #B8963E!important;}
+  header h1,header .header-subtitle{color:#fff!important;}
+  header .header-desc{color:#ccc!important;}
+  .wrapper{max-width:100%;padding:24px;}
+  .form-section{background:#fafafa!important;border:1px solid #ddd!important;break-inside:avoid;margin-bottom:20px;}
+  .section-title h2{color:#111!important;}
+  label{color:#555!important;}
+  input,textarea{background:#fff!important;color:#111!important;border:1px solid #ccc!important;}
+  .obra-block{background:#f5f5f5!important;border:1px solid #ddd!important;}
+  .btn-add-obra,.form-actions,.toast,.btn-remove{display:none!important;}
+  footer{border-top:1px solid #ccc!important;background:#f0f0f0!important;}
+  footer p{color:#888!important;}
+  .section-number{border-color:#B8963E!important;color:#B8963E!important;}
+  .section-title h2 span,.obra-block-title{color:#B8963E!important;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-line right"></div>
+  </div>
+  <h1>Ark <span>Time</span></h1>
+  <div class="header-subtitle">Consultoria Musical</div>
+  <p class="header-desc">
+    Este formul&#225;rio &#233; destinado &#224; coleta de dados para a consultoria de obras e fonogramas.
+    Preencha com aten&#231;&#227;o todos os campos solicitados para que possamos oferecer um atendimento preciso e especializado.
+  </p>
+</header>
+
+<div class="wrapper">
+<form id="mainForm" novalidate>
+
+  <div class="form-section">
+    <div class="section-title">
+      <div class="section-number">1</div>
+      <h2>Dados <span>Pessoais</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="field-grid cols-2">
+      <div class="field-wrap" style="grid-column:1/-1;">
+        <label>Nome Completo <span class="req">*</span></label>
+        <input type="text" id="nome" name="nome" placeholder="Seu nome completo" autocomplete="name">
+        <span class="field-error" id="err-nome">Por favor, informe seu nome completo.</span>
+      </div>
+      <div class="field-wrap">
+        <label>CPF <span class="req">*</span></label>
+        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" autocomplete="off">
+        <span class="field-error" id="err-cpf">CPF inv&#225;lido.</span>
+      </div>
+      <div class="field-wrap">
+        <label>E-mail <span class="req">*</span></label>
+        <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email">
+        <span class="field-error" id="err-email">E-mail inv&#225;lido.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="section-title">
+      <div class="section-number">2</div>
+      <h2>Identifica&#231;&#227;o <span>Art&#237;stica</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="field-grid cols-2">
+      <div class="field-wrap">
+        <label>Pseud&#244;nimo / Nome Art&#237;stico <span class="req">*</span></label>
+        <input type="text" id="pseudonimo" name="pseudonimo" placeholder="Nome que usa artisticamente">
+        <span class="field-error" id="err-pseudo">Informe seu pseud&#244;nimo.</span>
+      </div>
+      <div class="field-wrap">
+        <label>IPI ou CAE <span class="opt">(opcional)</span></label>
+        <input type="text" id="ipi" name="ipi" placeholder="N&#250;mero IPI ou CAE">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <div class="section-title">
+      <div class="section-number">3</div>
+      <h2>Obras e <span>Fonogramas</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div id="obras-container"></div>
+    <button type="button" class="btn-add-obra" id="btn-add-obra">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>
+      </svg>
+      Adicionar obra ou fonograma
+    </button>
+  </div>
+
+  <div class="form-section">
+    <div class="section-title">
+      <div class="section-number">4</div>
+      <h2>Presen&#231;a <span>Digital</span></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="field-grid cols-2">
+      <div class="field-wrap">
+        <label>Instagram</label>
+        <input type="url" id="instagram" name="instagram" placeholder="https://instagram.com/seuperfil">
+        <span class="field-error" id="err-instagram">URL inv&#225;lida.</span>
+      </div>
+      <div class="field-wrap">
+        <label>YouTube</label>
+        <input type="url" id="youtube_ch" name="youtube_ch" placeholder="https://youtube.com/c/seucanal">
+        <span class="field-error" id="err-youtube_ch">URL inv&#225;lida.</span>
+      </div>
+      <div class="field-wrap">
+        <label>Spotify</label>
+        <input type="url" id="spotify" name="spotify" placeholder="https://open.spotify.com/artist/...">
+        <span class="field-error" id="err-spotify">URL inv&#225;lida.</span>
+      </div>
+      <div class="field-wrap">
+        <label>TikTok</label>
+        <input type="url" id="tiktok" name="tiktok" placeholder="https://tiktok.com/@seuperfil">
+        <span class="field-error" id="err-tiktok">URL inv&#225;lida.</span>
+      </div>
+      <div class="field-wrap">
+        <label>Facebook</label>
+        <input type="url" id="facebook" name="facebook" placeholder="https://facebook.com/suapagina">
+        <span class="field-error" id="err-facebook">URL inv&#225;lida.</span>
+      </div>
+      <div class="field-wrap">
+        <label>Outras redes / links</label>
+        <input type="text" id="outras" name="outras" placeholder="Outros links relevantes">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+      Enviar Formul&#225;rio
+    </button>
+    <button type="button" class="btn btn-pdf" id="btn-pdf">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Exportar PDF
+    </button>
+    <button type="button" class="btn btn-secondary" id="btn-clear">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.47"/></svg>
+      Limpar Formul&#225;rio
+    </button>
+  </div>
+
+</form>
+</div>
+
+<footer>
+  <p>Criado por Wesley Castilho &nbsp;&middot;&nbsp; Ark Time Consultoria Musical</p>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+var obraCount=0;
+var container=document.getElementById('obras-container');
+function createObraBlock(){
+  obraCount++;
+  var idx=obraCount;
+  var block=document.createElement('div');
+  block.className='obra-block';
+  block.dataset.idx=idx;
+  block.innerHTML='<div class="obra-block-header"><span class="obra-block-title">Obra / Fonograma #'+idx+'</span><button type="button" class="btn-remove" onclick="removeObra(this)">Remover</button></div><div class="field-grid cols-2"><div class="field-wrap" style="grid-column:1/-1"><label>Nome da Obra ou Fonograma <span class="req">*</span></label><input type="text" name="obra_nome_'+idx+'" placeholder="T&#237;tulo da obra ou fonograma"><span class="field-error obra-err">Informe o nome da obra.</span></div><div class="field-wrap"><label>ISRC <span class="opt">(opcional)</span></label><input type="text" name="obra_isrc_'+idx+'" placeholder="BR-XXX-00-00000" maxlength="15"></div><div class="field-wrap"><label>Link na Plataforma Principal</label><input type="url" name="obra_link_'+idx+'" placeholder="https://" class="url-field"><span class="field-error obra-err">URL inv&#225;lida.</span></div><div class="field-wrap" style="grid-column:1/-1"><label>Link no YouTube</label><input type="url" name="obra_yt_'+idx+'" placeholder="https://youtube.com/watch?v=..." class="url-field"><span class="field-error obra-err">URL inv&#225;lida.</span></div></div>';
+  container.appendChild(block);
+  updateRemoveButtons();
+}
+function removeObra(btn){
+  var block=btn.closest('.obra-block');
+  if(container.children.length>1){block.remove();updateRemoveButtons();renumberObras();}
+}
+function renumberObras(){
+  var blocks=container.querySelectorAll('.obra-block');
+  for(var i=0;i<blocks.length;i++){
+    var t=blocks[i].querySelector('.obra-block-title');
+    if(t) t.textContent='Obra / Fonograma #'+(i+1);
+  }
+}
+function updateRemoveButtons(){
+  var btns=container.querySelectorAll('.btn-remove');
+  for(var i=0;i<btns.length;i++) btns[i].style.display=container.children.length>1?'inline-block':'none';
+}
+document.getElementById('btn-add-obra').addEventListener('click',createObraBlock);
+createObraBlock();
+
+document.getElementById('cpf').addEventListener('input',function(){
+  var v=this.value.replace(/\D/g,'').slice(0,11);
+  if(v.length>9) v=v.replace(/(\d{3})(\d{3})(\d{3})(\d{0,2})/,'$1.$2.$3-$4');
+  else if(v.length>6) v=v.replace(/(\d{3})(\d{3})(\d{0,3})/,'$1.$2.$3');
+  else if(v.length>3) v=v.replace(/(\d{3})(\d{0,3})/,'$1.$2');
+  this.value=v;
+});
+
+function validaCPF(cpf){
+  cpf=cpf.replace(/\D/g,'');
+  if(cpf.length!==11||/^(\d)\1+$/.test(cpf)) return false;
+  var s=0;
+  for(var i=0;i<9;i++) s+=parseInt(cpf[i])*(10-i);
+  var r=(s*10)%11; if(r>=10) r=0;
+  if(r!==parseInt(cpf[9])) return false;
+  s=0;
+  for(var i=0;i<10;i++) s+=parseInt(cpf[i])*(11-i);
+  r=(s*10)%11; if(r>=10) r=0;
+  return r===parseInt(cpf[10]);
+}
+function isUrl(u){if(!u) return true; try{new URL(u);return true;}catch(e){return false;}}
+function isEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+function showErr(id,msg){var el=document.getElementById(id);if(el){if(msg)el.textContent=msg;el.style.display='block';}var inp=document.getElementById(id.replace('err-',''));if(inp)inp.classList.add('error');}
+function clearErr(id){var el=document.getElementById(id);if(el)el.style.display='none';var inp=document.getElementById(id.replace('err-',''));if(inp)inp.classList.remove('error');}
+
+function validateAll(){
+  var ok=true;
+  var nome=document.getElementById('nome').value.trim();
+  if(nome.length<3){showErr('err-nome');ok=false;}else clearErr('err-nome');
+  if(!validaCPF(document.getElementById('cpf').value)){showErr('err-cpf');ok=false;}else clearErr('err-cpf');
+  if(!isEmail(document.getElementById('email').value.trim())){showErr('err-email');ok=false;}else clearErr('err-email');
+  if(!document.getElementById('pseudonimo').value.trim()){showErr('err-pseudo');ok=false;}else clearErr('err-pseudo');
+  ['instagram','youtube_ch','spotify','tiktok','facebook'].forEach(function(f){
+    var v=document.getElementById(f).value.trim();
+    if(v&&!isUrl(v)){showErr('err-'+f);ok=false;}else clearErr('err-'+f);
+  });
+  container.querySelectorAll('.obra-block').forEach(function(block){
+    var n=block.querySelector('input[name^="obra_nome_"]');
+    var errs=block.querySelectorAll('.obra-err');
+    var urls=block.querySelectorAll('.url-field');
+    if(n&&!n.value.trim()){n.classList.add('error');if(errs[0])errs[0].style.display='block';ok=false;}
+    else{if(n)n.classList.remove('error');if(errs[0])errs[0].style.display='none';}
+    urls.forEach(function(u,i){
+      if(u.value&&!isUrl(u.value)){u.classList.add('error');if(errs[i+1])errs[i+1].style.display='block';ok=false;}
+      else{u.classList.remove('error');if(errs[i+1])errs[i+1].style.display='none';}
+    });
+  });
+  return ok;
+}
+
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast '+(type||'')+' show';
+  clearTimeout(t._timer);
+  t._timer=setTimeout(function(){t.classList.remove('show');},3500);
+}
+
+document.getElementById('mainForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  if(!validateAll()){
+    showToast('Corrija os campos destacados antes de prosseguir.','error-toast');
+    var f=document.querySelector('.error');
+    if(f)f.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  // Montar mensagem com todos os dados
+  var msg = '';
+  msg += '*ARK TIME — CONSULTORIA MUSICAL*\n';
+  msg += '*Ficha de Cadastro*\n\n';
+
+  msg += '*━━ DADOS PESSOAIS ━━*\n';
+  msg += '*Nome:* ' + (document.getElementById('nome').value.trim() || '—') + '\n';
+  msg += '*CPF:* ' + (document.getElementById('cpf').value.trim() || '—') + '\n';
+  msg += '*E-mail:* ' + (document.getElementById('email').value.trim() || '—') + '\n\n';
+
+  msg += '*━━ IDENTIFICAÇÃO ARTÍSTICA ━━*\n';
+  msg += '*Pseudônimo:* ' + (document.getElementById('pseudonimo').value.trim() || '—') + '\n';
+  var ipi = document.getElementById('ipi').value.trim();
+  if(ipi) msg += '*IPI/CAE:* ' + ipi + '\n';
+  msg += '\n';
+
+  msg += '*━━ OBRAS E FONOGRAMAS ━━*\n';
+  var blocos = container.querySelectorAll('.obra-block');
+  blocos.forEach(function(block, i){
+    var nomeObra = block.querySelector('input[name^="obra_nome_"]');
+    var isrc = block.querySelector('input[name^="obra_isrc_"]');
+    var link = block.querySelector('input[name^="obra_link_"]');
+    var yt = block.querySelector('input[name^="obra_yt_"]');
+    msg += '*Obra #' + (i+1) + ':* ' + (nomeObra&&nomeObra.value.trim() ? nomeObra.value.trim() : '—') + '\n';
+    if(isrc&&isrc.value.trim()) msg += '  ISRC: ' + isrc.value.trim() + '\n';
+    if(link&&link.value.trim()) msg += '  Plataforma: ' + link.value.trim() + '\n';
+    if(yt&&yt.value.trim()) msg += '  YouTube: ' + yt.value.trim() + '\n';
+  });
+  msg += '\n';
+
+  msg += '*━━ PRESENÇA DIGITAL ━━*\n';
+  var redes = [
+    {id:'instagram', label:'Instagram'},
+    {id:'youtube_ch', label:'YouTube'},
+    {id:'spotify', label:'Spotify'},
+    {id:'tiktok', label:'TikTok'},
+    {id:'facebook', label:'Facebook'},
+    {id:'outras', label:'Outros links'}
+  ];
+  redes.forEach(function(r){
+    var v = document.getElementById(r.id).value.trim();
+    if(v) msg += '*' + r.label + ':* ' + v + '\n';
+  });
+
+  msg += '\n_Enviado via formulário Ark Time_';
+
+  var numero = '5511961513586';
+  var url = 'https://wa.me/' + numero + '?text=' + encodeURIComponent(msg);
+  showToast('Abrindo WhatsApp com os dados...', 'success');
+  setTimeout(function(){ window.open(url, '_blank'); }, 400);
+});
+document.getElementById('btn-clear').addEventListener('click',function(){
+  if(!confirm('Limpar todos os campos?')) return;
+  document.getElementById('mainForm').reset();
+  document.querySelectorAll('.error').forEach(function(el){el.classList.remove('error');});
+  document.querySelectorAll('.field-error').forEach(function(el){el.style.display='none';});
+  while(container.firstChild) container.removeChild(container.firstChild);
+  obraCount=0; createObraBlock();
+  showToast('Formul\u00e1rio limpo.','');
+});
+document.getElementById('btn-pdf').addEventListener('click',function(){
+  showToast('Preparando PDF...','');
+  setTimeout(function(){window.print();},300);
+});
+['nome','email','cpf','pseudonimo'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('blur',function(){
+    if(id==='nome'){if(this.value&&this.value.trim().length<3)showErr('err-nome');else if(this.value.trim().length>=3)clearErr('err-nome');}
+    if(id==='email'){if(this.value&&!isEmail(this.value))showErr('err-email');else if(isEmail(this.value))clearErr('err-email');}
+    if(id==='cpf'){if(this.value&&!validaCPF(this.value))showErr('err-cpf');else if(validaCPF(this.value))clearErr('err-cpf');}
+    if(id==='pseudonimo'){if(!this.value.trim())showErr('err-pseudo');else clearErr('err-pseudo');}
+  });
+});
+</script>
+</body>
+</html>
